@@ -15,11 +15,8 @@ def extract_file(compressed_file):
     file_directory = compressed_file.parent
     extracted_filename = compressed_file.stem
 
-    # Remove existing extension (if any) and add .pdf extension
-    extracted_filename_pdf = extracted_filename + ".pdf"
-
     # Create the extracted file in the same directory with the .pdf extension
-    extracted_file = file_directory / extracted_filename_pdf
+    extracted_file = file_directory / extracted_filename
 
     # Extract the compressed file
     with lzma.open(compressed_file, "rb") as file_in, open(extracted_file, "wb") as file_out:
@@ -27,6 +24,7 @@ def extract_file(compressed_file):
 
     # Remove the compressed file
     compressed_file.unlink()
+    print(f"\nExtracted: {extracted_file}")  # Print the compressed file name
 
 # Find compressed files (with .xz extension) and extract them using parallel processing
 with ThreadPoolExecutor() as executor:
@@ -42,7 +40,7 @@ with ThreadPoolExecutor() as executor:
     # Print the rolling wheel animation while extraction is in progress
     while any(not future.done() for future in futures):
         for char in animation:
-            print(f"\rExtracting files... {char}", end="")
+            print(f"\r\nExtracting files... {char}", end="")
             time.sleep(0.1)
     
     # Print a message after extraction is completed
