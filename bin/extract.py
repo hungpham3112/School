@@ -40,7 +40,7 @@ with ThreadPoolExecutor() as executor:
     # Print the rolling wheel animation while extraction is in progress
     while any(not future.done() for future in futures):
         for char in animation:
-            print(f"\r\nExtracting files... {char}", end="")
+            print(f"\rExtracting files... {char}", end="")
             time.sleep(0.1)
     
     # Print a message after extraction is completed
