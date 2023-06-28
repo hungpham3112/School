@@ -1,6 +1,33 @@
-numpy
-pandas
-Pillow
-opencv-python-headless
-streamlit
-tensorflow
+boltons @ file:///home/conda/feedstock_root/build_artifacts/boltons_1677499911949/work
+brotlipy @ file:///D:/bld/brotlipy_1666764804378/work
+certifi==2023.5.7
+cffi @ file:///D:/bld/cffi_1671179506518/work
+charset-normalizer @ file:///home/conda/feedstock_root/build_artifacts/charset-normalizer_1678108872112/work
+colorama @ file:///home/conda/feedstock_root/build_artifacts/colorama_1666700638685/work
+conda @ file:///D:/bld/conda_1685035341939/work
+conda-content-trust @ file:///home/conda/feedstock_root/build_artifacts/conda-content-trust_1621370699668/work
+conda-libmamba-solver @ file:///home/conda/feedstock_root/build_artifacts/conda-libmamba-solver_1685030890479/work/src
+conda-package-handling @ file:///home/conda/feedstock_root/build_artifacts/conda-package-handling_1669907009957/work
+conda_package_streaming @ file:///home/conda/feedstock_root/build_artifacts/conda-package-streaming_1685101166527/work
+cryptography @ file:///D:/bld/cryptography-split_1681508778756/work
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1663625384323/work
+jsonpatch @ file:///home/conda/feedstock_root/build_artifacts/jsonpatch_1632759296524/work
+jsonpointer==2.0
+libmambapy @ file:///D:/bld/mamba-split_1680791188848/work/libmambapy
+menuinst @ file:///D:/bld/menuinst_1666839998718/work
+packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1681337016113/work
+pluggy @ file:///home/conda/feedstock_root/build_artifacts/pluggy_1667232663820/work
+pycosat @ file:///D:/bld/pycosat_1666836675990/work
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/pycparser_1636257122734/work
+pyOpenSSL @ file:///home/conda/feedstock_root/build_artifacts/pyopenssl_1680037383858/work
+PySocks @ file:///D:/bld/pysocks_1661604991356/work
+requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1684774241324/work
+ruamel.yaml @ file:///D:/bld/ruamel.yaml_1685120940493/work
+ruamel.yaml.clib @ file:///D:/bld/ruamel.yaml.clib_1670412994006/work
+six @ file:///home/conda/feedstock_root/build_artifacts/six_1620240208055/work
+toolz @ file:///home/conda/feedstock_root/build_artifacts/toolz_1657485559105/work
+tqdm @ file:///home/conda/feedstock_root/build_artifacts/tqdm_1677948868469/work
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1683161174614/work
+win-inet-pton @ file:///D:/bld/win_inet_pton_1667051142467/work
+wincertstore==0.2
+zstandard==0.19.0
