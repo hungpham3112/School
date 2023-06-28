@@ -1,62 +1,76 @@
-from keras.models import load_model
-from time import sleep
-from tensorflow.keras.utils import img_to_array
-from keras.preprocessing import image
+import streamlit as st
 import cv2
+from PIL import Image
 import numpy as np
 
+# Load pre-trained facial expression recognition model
+# (Assuming you have a pre-trained model stored as 'model.h5')
+model = load_model('model.h5')
+
+# Define class labels for facial expressions
+class_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
+
+def detect_expression(image):
+    # Convert image to grayscale
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # Perform face detection using a pre-trained cascade classifier
+    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
+
+    # Process each detected face
+    for (x, y, w, h) in faces:
+        face_roi = gray[y:y+h, x:x+w]  # Extract the region of interest (face)
+
+        # Resize face ROI to match the input size of the model
+        face_roi = cv2.resize(face_roi, (48, 48))
+        face_roi = np.expand_dims(face_roi, axis=0)
+        face_roi = np.expand_dims(face_roi, axis=-1)
+
+        # Normalize the face ROI
+        face_roi = face_roi / 255.0
+
+        # Predict facial expression using the pre-trained model
+        expression_probs = model.predict(face_roi)[0]
+        predicted_expression = class_labels[np.argmax(expression_probs)]
+
+        # Draw bounding box and predicted expression label on the image
+        cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
+        cv2.putText(image, predicted_expression, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
+
+    return image
+
 def main():
-    print("[ droidcam.py ] - Initializing...")
-    face_classifier = cv2.CascadeClassifier('./haarcascade_frontalface_default.xml')
-    classifier =load_model('./fer_model.h5')
+    st.title("Facial Expression Recognition")
+    st.write("Upload an image or use the webcam to detect and classify facial expressions.")
 
-    emotion_labels = ['Angry','Disgust','Fear','Happy','Neutral', 'Sad', 'Surprise']
-    # Opening video stream of ip camera via its url
-    cap = cv2.VideoCapture("http://192.168.137.101:3112/")
+    st.sidebar.title("Input Options")
+    input_option = st.sidebar.selectbox(
+        "Select Input Option",
+        ("Upload Image", "Use Webcam")
+    )
 
-    # Corrective actions printed in the even of failed connection.
-    if cap.isOpened() is not True:
-        print ('Not opened.')
-        print ('Please ensure the following:')
-        print ('1. DroidCam is not running in your browser.')
-        print ('2. The IP address given is correct.')
+    if input_option == "Upload Image":
+        uploaded_file = st.file_uploader("Choose an image", type=["jpg", "jpeg", "png"])
+        if uploaded_file is not None:
+            image = Image.open(uploaded_file)
+            image = np.array(image.convert("RGB"))
+            image = detect_expression(image)
+            st.image(image, channels="BGR", caption="Processed Image")
 
-    # Connection successful. Proceeding to display video stream.
-    while True:
-        _, frame = cap.read()
-        labels = []
-        if not frame.empty():
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            # Perform further processing on the frame
-        else:
-            # Handle the case when the frame is empty
-            print("Empty frame received from the video source.")
-        faces = face_classifier.detectMultiScale(gray)
+    elif input_option == "Use Webcam":
+        video_capture = cv2.VideoCapture(0)
 
-        for (x,y,w,h) in faces:
-            cv2.rectangle(frame,(x,y),(x+w,y+h),(0,255,255),2)
-            roi_gray = gray[y:y+h,x:x+w]
-            roi_gray = cv2.resize(roi_gray,(48,48),interpolation=cv2.INTER_AREA)
+        while True:
+            ret, frame = video_capture.read()
+            frame = detect_expression(frame)
+            st.image(frame, channels="BGR", caption="Facial Expression Recognition")
 
-            if np.sum([roi_gray])!=0:
-                roi = roi_gray.astype('float')/255.0
-                roi = img_to_array(roi)
-                roi = np.expand_dims(roi,axis=0)
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
 
-                prediction = classifier.predict(roi)[0]
-                label=emotion_labels[prediction.argmax()]
-                label_position = (x,y)
-                cv2.putText(frame,label,label_position,cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)
-            else:
-                cv2.putText(frame,'No Faces',(30,80),cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)
-        cv2.imshow('Emotion Detector',frame)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        video_capture.release()
+        cv2.destroyAllWindows()
 
-    cap.release()
-    cv2.destroyAllWindows()
-
-
-
-if __name__=='__main__':
+if __name__ == "__main__":
     main()
