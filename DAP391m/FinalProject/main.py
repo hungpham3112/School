@@ -2,27 +2,26 @@ import streamlit as st
 import cv2
 from PIL import Image
 import numpy as np
-from keras.models import model_from_json
+from keras.models import model_from_json, load_model
 
 # Load pre-trained facial expression recognition model
 # (Assuming you have a pre-trained model stored as 'model.h5')
-json_file = open('./model/emotion_model1.json', 'r')
-loaded_model_json = json_file.read()
-json_file.close()
-model = model_from_json(loaded_model_json)
+#  json_file = open('./model/emotion_model1.json', 'r')
+#  loaded_model_json = json_file.read()
+#  json_file.close()
+model = load_model("./model/optimize2_model.h5")
 
 # load weights into new model
-model.load_weights("./model/emotion_model1.h5")
+#  model.load_weights("./model/optimize2_model.h5")
 
 # Define class labels for facial expressions
 class_labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
-
+face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 def detect_expression(image):
     # Convert image to grayscale
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     # Perform face detection using a pre-trained cascade classifier
-    face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
 
     # Process each detected face
@@ -80,12 +79,13 @@ def main():
             take_picture_button = st.button( 'Take Picture' )
 
             while True:
-                got_frame , frame = vid.read()
+                got_frame , frame = vid.read() 
                 frame = cv2.cvtColor( frame , cv2.COLOR_BGR2RGB )
                 if got_frame:
-                    frame_window.image(frame)
-
+                    new_frame = detect_expression(frame)
+                    frame_window.image(new_frame)
             vid.release()
+
 
     elif option == "Image or Video":
         uploaded_file = st.file_uploader("Choose an image or video file", type=["jpg", "jpeg", "png", "mp4"])
