@@ -1,5 +1,5 @@
 numpy
-pandas
+fer
 Pillow
 opencv-python-headless
 streamlit
