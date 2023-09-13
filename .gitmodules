@@ -16,3 +16,9 @@
 [submodule "CPV301/Homework/FinalProject"]
 	path = CPV301/Homework/FinalProject
 	url = https://github.com/hungpham3112/AssignmentCPV.git
+[submodule "CPV301/Homework/Lab5"]
+	path = CPV301/Homework/Lab5
+	url = https://github.com/hungpham3112/RANSAC.git
+[submodule "CPV301/Homework/Lab6"]
+	path = CPV301/Homework/Lab6
+	url = https://github.com/hungpham3112/ImageStitching.git
