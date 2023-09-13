@@ -1,0 +1,15 @@
+[submodule "PFP191/Lab1"]
+	path = PFP191/Lab1
+	url = https://github.com/hungpham3112/Lab1-PFP191
+[submodule "PFP191/Lab2"]
+	path = PFP191/Lab2
+	url = https://github.com/hungpham3112/Lab2-PFP191
+[submodule "PFP191/Lab3"]
+	path = PFP191/Lab3
+	url = https://github.com/hungpham3112/Lab3-PFP191
+[submodule "PFP191/Lab4"]
+	path = PFP191/Lab4
+	url = https://github.com/hungpham3112/Lab4-PFP191
+[submodule "PFP191/Lab5"]
+	path = PFP191/Lab5
+	url = https://github.com/hungpham3112/Lab5-PFP191
