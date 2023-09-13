@@ -22,3 +22,6 @@
 [submodule "CPV301/Homework/Lab6"]
 	path = CPV301/Homework/Lab6
 	url = https://github.com/hungpham3112/ImageStitching.git
+[submodule "DAP391m/Homework/FinalProject"]
+	path = DAP391m/Homework/FinalProject
+	url = https://github.com/hungpham3112/FER.git
