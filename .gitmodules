@@ -13,3 +13,6 @@
 [submodule "PFP191/Lab5"]
 	path = PFP191/Lab5
 	url = https://github.com/hungpham3112/Lab5-PFP191
+[submodule "CPV301/Homework/FinalProject"]
+	path = CPV301/Homework/FinalProject
+	url = https://github.com/hungpham3112/AssignmentCPV.git
